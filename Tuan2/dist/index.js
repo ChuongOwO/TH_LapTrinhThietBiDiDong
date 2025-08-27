@@ -9,6 +9,15 @@ const helloAsync = new Promise((resolve) => {
 console.log("=====Cau 1=====");
 helloAsync.then((message) => console.log(message));
 // 2. Write a function that returns a Promise resolving with the number 10 after 1 second.
+function returnTen() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(10);
+        }, 1000);
+    });
+}
+console.log("=====Cau 2=====");
+returnTen().then((num) => console.log(num));
 // 3. Write a function that rejects a Promise with the error "Something went wrong" after 1 second.
 // 4. Use .then() and .catch() to handle a Promise that returns a random number.
 // 5. Create a function simulateTask(time) that returns a Promise resolving with "Task done" after time ms.
