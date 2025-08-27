@@ -5,9 +5,10 @@ const helloAsync = new Promise<string>((resolve) => {
         resolve("Hello Async");
     }, 2000);
 });
-
-console.log("=====Cau 1=====");
-helloAsync.then((message) => console.log(message));
+async function cau1() {
+    console.log("=====Cau 1=====");
+    console.log(await helloAsync);
+}
 
 // 2. Write a function that returns a Promise resolving with the number 10 after 1 second.
 function returnTen(): Promise<number> {
@@ -17,8 +18,10 @@ function returnTen(): Promise<number> {
         }, 1000);
     });
 }
-console.log("=====Cau 2=====");
-returnTen().then((num) => console.log(num));
+async function cau2() {
+    console.log("=====Cau 2=====");
+    console.log(await returnTen());
+}
 
 // 3. Write a function that rejects a Promise with the error "Something went wrong" after 1 second.
 function rejectPromise(): Promise<void> {
@@ -28,10 +31,37 @@ function rejectPromise(): Promise<void> {
         }, 1000);
     });
 }
-console.log("=====Cau 3=====");
-rejectPromise().catch((error) => console.error(error.message));
+async function cau3() {
+    console.log("=====Cau 3=====");
+    try {
+        await rejectPromise();
+    } catch (err) {
+        console.error((err as Error).message);
+    }
+}
 
 // 4. Use .then() and .catch() to handle a Promise that returns a random number.
+function randomNumber(): Promise<number> {
+    return new Promise<number>((resolve, reject) => {
+        const num = Math.random();
+        console.log("Generated number:", num);
+        if (num > 0.5) {
+            resolve(num);
+        } else {
+            reject(new Error("The Generated number is less than 0.5"));
+        }
+    });
+}
+async function cau4() {
+    console.log("=====Cau 4=====");
+    try {
+        const num = await randomNumber();
+        console.log("Random number:", num, "is greater than 0.5");
+    } catch (err) {
+        console.error((err as Error).message);
+    }
+}
+
 // 5. Create a function simulateTask(time) that returns a Promise resolving with "Task done" after time ms.
 // 6. Use Promise.all() to run 3 simulated Promises in parallel and print the result.
 // 7. Use Promise.race() to return whichever Promise resolves first.
@@ -63,3 +93,12 @@ rejectPromise().catch((error) => console.error(error.message));
 // 28. Write an async function batchProcess() that processes 5 async tasks at once (use Promise.all).
 // 29. Write an async function queueProcess() that processes tasks sequentially in a queue.
 // 30. Use async/await + Promise.allSettled() to handle multiple API calls and display their success/failure status.
+
+async function main() {
+    await cau1();
+    await cau2();
+    await cau3();
+    await cau4();
+}
+
+main();

@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 // A. Basics with Promise
 // 1. Create a Promise that returns the string "Hello Async" after 2 seconds.
 const helloAsync = new Promise((resolve) => {
@@ -6,8 +15,12 @@ const helloAsync = new Promise((resolve) => {
         resolve("Hello Async");
     }, 2000);
 });
-console.log("=====Cau 1=====");
-helloAsync.then((message) => console.log(message));
+function cau1() {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("=====Cau 1=====");
+        console.log(yield helloAsync);
+    });
+}
 // 2. Write a function that returns a Promise resolving with the number 10 after 1 second.
 function returnTen() {
     return new Promise((resolve) => {
@@ -16,8 +29,12 @@ function returnTen() {
         }, 1000);
     });
 }
-console.log("=====Cau 2=====");
-returnTen().then((num) => console.log(num));
+function cau2() {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("=====Cau 2=====");
+        console.log(yield returnTen());
+    });
+}
 // 3. Write a function that rejects a Promise with the error "Something went wrong" after 1 second.
 function rejectPromise() {
     return new Promise((_, reject) => {
@@ -26,9 +43,42 @@ function rejectPromise() {
         }, 1000);
     });
 }
-console.log("=====Cau 3=====");
-rejectPromise().catch((error) => console.error(error.message));
+function cau3() {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("=====Cau 3=====");
+        try {
+            yield rejectPromise();
+        }
+        catch (err) {
+            console.error(err.message);
+        }
+    });
+}
 // 4. Use .then() and .catch() to handle a Promise that returns a random number.
+function randomNumber() {
+    return new Promise((resolve, reject) => {
+        const num = Math.random();
+        console.log("Generated number:", num);
+        if (num > 0.5) {
+            resolve(num);
+        }
+        else {
+            reject(new Error("The Generated number is less than 0.5"));
+        }
+    });
+}
+function cau4() {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("=====Cau 4=====");
+        try {
+            const num = yield randomNumber();
+            console.log("Random number:", num, "is greater than 0.5");
+        }
+        catch (err) {
+            console.error(err.message);
+        }
+    });
+}
 // 5. Create a function simulateTask(time) that returns a Promise resolving with "Task done" after time ms.
 // 6. Use Promise.all() to run 3 simulated Promises in parallel and print the result.
 // 7. Use Promise.race() to return whichever Promise resolves first.
@@ -58,3 +108,12 @@ rejectPromise().catch((error) => console.error(error.message));
 // 28. Write an async function batchProcess() that processes 5 async tasks at once (use Promise.all).
 // 29. Write an async function queueProcess() that processes tasks sequentially in a queue.
 // 30. Use async/await + Promise.allSettled() to handle multiple API calls and display their success/failure status.
+function main() {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield cau1();
+        yield cau2();
+        yield cau3();
+        yield cau4();
+    });
+}
+main();
