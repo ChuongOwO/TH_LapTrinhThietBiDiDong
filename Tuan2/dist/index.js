@@ -118,6 +118,28 @@ function cau6() {
     });
 }
 // 7. Use Promise.race() to return whichever Promise resolves first.
+function runRaceTasks() {
+    const task1 = simulateTask("Task 1", 1000).then((res) => {
+        console.log(res.name + ": " + res.result);
+        return res;
+    });
+    const task2 = simulateTask("Task 2", 1500).then((res) => {
+        console.log(res.name + ": " + res.result);
+        return res;
+    });
+    const task3 = simulateTask("Task 3", 2000).then((res) => {
+        console.log(res.name + ": " + res.result);
+        return res;
+    });
+    return Promise.race([task1, task2, task3]);
+}
+function cau7() {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("=====Cau 7=====");
+        const result = yield runRaceTasks();
+        console.log("First task completed:", result.name);
+    });
+}
 // 8. Create a Promise chain: square the number 2, then double it, then add 5.
 // 9. Write a Promise that reads an array after 1 second and filters even numbers.
 // 10. Use .finally() to log "Done" when a Promise finishes (success or failure).
@@ -152,6 +174,7 @@ function main() {
         yield cau4();
         yield cau5();
         yield cau6();
+        yield cau7();
     });
 }
 main();
