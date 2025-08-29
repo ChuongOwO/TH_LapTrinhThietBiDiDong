@@ -120,6 +120,24 @@ async function cau7() {
 }
 
 // 8. Create a Promise chain: square the number 2, then double it, then add 5.
+function square(num: number): Promise<number> {
+    return Promise.resolve(num * num);
+}
+function double(num: number): Promise<number> {
+    return Promise.resolve(num * 2);
+}
+function addFive(num: number): Promise<number> {
+    return Promise.resolve(num + 5);
+}
+async function cau8() {
+    await new Promise(res => setTimeout(res, 2100));
+    console.log("=====Cau 8=====");
+    const result = await square(2)
+        .then(double)
+        .then(addFive);
+    console.log("Final result:", result); 
+}
+
 // 9. Write a Promise that reads an array after 1 second and filters even numbers.
 // 10. Use .finally() to log "Done" when a Promise finishes (success or failure).
 
@@ -156,6 +174,7 @@ async function main() {
     await cau5();
     await cau6();
     await cau7();
+    await cau8();
 }
 
 main();
