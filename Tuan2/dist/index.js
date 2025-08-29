@@ -95,6 +95,28 @@ function cau5() {
     });
 }
 // 6. Use Promise.all() to run 3 simulated Promises in parallel and print the result.
+function runParallelTasks() {
+    const task1 = simulateTask("Task 1", 1000).then((res) => {
+        console.log(res.name + " " + res.result);
+        return res;
+    });
+    const task2 = simulateTask("Task 2", 2000).then((res) => {
+        console.log(res.name + " " + res.result);
+        return res;
+    });
+    const task3 = simulateTask("Task 3", 1500).then((res) => {
+        console.log(res.name + " " + res.result);
+        return res;
+    });
+    return Promise.all([task1, task2, task3]);
+}
+function cau6() {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("=====Cau 6=====");
+        const results = yield runParallelTasks();
+        console.log("All tasks completed:", results.map(r => r.name).join(", "));
+    });
+}
 // 7. Use Promise.race() to return whichever Promise resolves first.
 // 8. Create a Promise chain: square the number 2, then double it, then add 5.
 // 9. Write a Promise that reads an array after 1 second and filters even numbers.
@@ -129,6 +151,7 @@ function main() {
         yield cau3();
         yield cau4();
         yield cau5();
+        yield cau6();
     });
 }
 main();
