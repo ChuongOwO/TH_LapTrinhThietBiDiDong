@@ -63,6 +63,18 @@ async function cau4() {
 }
 
 // 5. Create a function simulateTask(time) that returns a Promise resolving with "Task done" after time ms.
+function simulateTask(name: string, time: number): Promise<{ name: string; result: string }> {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({ name, result: "done" });
+        }, time);
+    });
+}
+async function cau5() { 
+    console.log("=====Cau 5====="); 
+    const result = await simulateTask("Task 1", 1000);
+    console.log(`${result.name} ${result.result}`);
+}
 // 6. Use Promise.all() to run 3 simulated Promises in parallel and print the result.
 // 7. Use Promise.race() to return whichever Promise resolves first.
 // 8. Create a Promise chain: square the number 2, then double it, then add 5.
@@ -99,6 +111,7 @@ async function main() {
     await cau2();
     await cau3();
     await cau4();
+    await cau5();
 }
 
 main();

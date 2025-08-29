@@ -80,6 +80,20 @@ function cau4() {
     });
 }
 // 5. Create a function simulateTask(time) that returns a Promise resolving with "Task done" after time ms.
+function simulateTask(name, time) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({ name, result: "done" });
+        }, time);
+    });
+}
+function cau5() {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("=====Cau 5=====");
+        const result = yield simulateTask("Task 1", 1000);
+        console.log(`${result.name} ${result.result}`);
+    });
+}
 // 6. Use Promise.all() to run 3 simulated Promises in parallel and print the result.
 // 7. Use Promise.race() to return whichever Promise resolves first.
 // 8. Create a Promise chain: square the number 2, then double it, then add 5.
@@ -114,6 +128,7 @@ function main() {
         yield cau2();
         yield cau3();
         yield cau4();
+        yield cau5();
     });
 }
 main();
