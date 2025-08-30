@@ -161,6 +161,23 @@ function cau8() {
     });
 }
 // 9. Write a Promise that reads an array after 1 second and filters even numbers.
+function filterEvenNumbers(arr) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const evenNumbers = arr.filter(num => num % 2 === 0);
+            resolve(evenNumbers);
+        }, 1000);
+    });
+}
+function cau9() {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("=====Cau 9=====");
+        const numbers = [1, 2, 3, 4, 5, 6];
+        const evenNumbers = yield filterEvenNumbers(numbers);
+        console.log("The array:", numbers);
+        console.log("Even numbers:", evenNumbers);
+    });
+}
 // 10. Use .finally() to log "Done" when a Promise finishes (success or failure).
 // B. Async/Await
 // 11. Convert Exercise 1 into async/await.
@@ -195,6 +212,7 @@ function main() {
         yield cau6();
         yield cau7();
         yield cau8();
+        yield cau9();
     });
 }
 main();
