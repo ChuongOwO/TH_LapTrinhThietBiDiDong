@@ -179,6 +179,34 @@ function cau9() {
     });
 }
 // 10. Use .finally() to log "Done" when a Promise finishes (success or failure).
+function promiseWithFinally() {
+    return new Promise((resolve, reject) => {
+        const succeed = Math.random() > 0.5;
+        setTimeout(() => {
+            if (succeed) {
+                resolve("Success");
+            }
+            else {
+                reject(new Error("Failure"));
+            }
+        }, 1000);
+    });
+}
+function cau10() {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("=====Cau 10=====");
+        try {
+            const result = yield promiseWithFinally();
+            console.log(result);
+        }
+        catch (err) {
+            console.error(err.message);
+        }
+        finally {
+            console.log("Done");
+        }
+    });
+}
 // B. Async/Await
 // 11. Convert Exercise 1 into async/await.
 // 12. Write an async function that calls simulateTask(2000) and logs the result.
@@ -213,6 +241,7 @@ function main() {
         yield cau7();
         yield cau8();
         yield cau9();
+        yield cau10();
     });
 }
 main();

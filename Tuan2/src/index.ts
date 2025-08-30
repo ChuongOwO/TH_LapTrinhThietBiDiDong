@@ -156,6 +156,30 @@ async function cau9() {
 }
 
 // 10. Use .finally() to log "Done" when a Promise finishes (success or failure).
+function promiseWithFinally(): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+        const succeed = Math.random() > 0.5;
+        setTimeout(() => {
+            if (succeed) {
+                resolve("Success");
+            } else {    
+                reject(new Error("Failure"));
+            }
+        }, 1000);
+    });
+}
+async function cau10() {
+    console.log("=====Cau 10=====");
+    try {
+        const result = await promiseWithFinally();
+        console.log(result);
+    } catch (err) {
+        console.error((err as Error).message);
+    } finally {
+        console.log("Done");
+    }
+}
+
 
 // B. Async/Await
 // 11. Convert Exercise 1 into async/await.
@@ -192,6 +216,7 @@ async function main() {
     await cau7();
     await cau8();
     await cau9();
+    await cau10();
 }
 
 main();
